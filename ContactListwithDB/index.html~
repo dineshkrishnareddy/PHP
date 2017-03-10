@@ -1,0 +1,62 @@
+<html>
+  <head>
+	<title>PHP Demo</title>
+  <head>
+
+  <body>
+	<?php
+		$name = $password = "";
+
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		    // collect value of input field
+		    $name = $_POST['realname'];
+		    if (empty($name)) {
+			echo "Name is empty";
+		    } else {
+			echo $name;
+		    }
+
+		    $password = $_POST['mypassword'];
+		    if (empty($password)) {
+			echo "Password is empty";
+		    } else {
+			echo $password;
+		    }
+
+		    $name1  = $_POST['realname'];
+		    $pass  = $_POST['mypassword'];
+		    echo $name1;
+		    echo $pass;
+		}
+
+		function createDB () {
+			$servername = "localhost";
+			$username = "root";
+			$password = "1111_aaaA";
+
+			// Create connection
+			$conn = new mysqli($servername, $username, $password, '', 0, '/var/run/mysqld/mysqld.sock');
+			// Check connection
+			if ($conn->connect_error) {
+				die("Connection failed: " . $conn->connect_error);
+			}
+
+			// Create database
+			$sql = "CREATE DATABASE myDB";
+			if ($conn->query($sql) === TRUE) {
+				echo "Database created successfully";
+			} else {
+				echo "Error creating database: " . $conn->error;
+			}
+
+			$conn->close();
+		}
+	?>
+
+	<FORM ACTION="<?php echo $_SERVER['PHP_SELF'];?>" METHOD=POST>
+	   name: <INPUT TYPE=TEXT NAME="realname" VALUE="<?php echo $name; ?>"><BR>
+	   password: <INPUT TYPE=PASSWORD NAME="mypassword">
+	  <P><INPUT TYPE=SUBMIT VALUE="submit">
+	</FORM>
+  </body>
+</html>
